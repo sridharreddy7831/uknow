@@ -462,3 +462,278 @@ html {
     background-position: 1000px 0;
   }
 }
+
+/* ========================================
+   BIOLUMINESCENT GRID STYLES
+   ======================================== */
+
+.bio-section {
+  background: #010409;
+  position: relative;
+}
+
+.bio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  position: relative;
+}
+
+.bio-item {
+  position: relative;
+  padding: 2rem;
+  background: rgba(13, 17, 23, 0.6);
+  border: 1px solid rgba(35, 134, 255, 0.2);
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.bio-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(0, 119, 255, 0.15),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bio-item:hover::before {
+  opacity: 1;
+}
+
+.bio-item::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 119, 255, 0) 0%,
+    rgba(0, 234, 255, 0.3) 50%,
+    rgba(0, 119, 255, 0) 100%
+  );
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bio-item:hover::after {
+  opacity: 1;
+}
+
+.bio-item:hover {
+  border-color: rgba(35, 134, 255, 0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 119, 255, 0.3);
+}
+
+.bio-item-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ========================================
+   APPROACH FLOW STYLES
+   ======================================== */
+
+.approach-flow {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.flow-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #fb923c 0%, #fbbf24 50%, #3b82f6 100%);
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.approach-flow-item {
+  position: relative;
+  margin-bottom: 80px;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.approach-flow-item.left-side {
+  transform: translateX(-100px);
+  padding-right: 52%;
+}
+
+.approach-flow-item.right-side {
+  transform: translateX(100px);
+  padding-left: 52%;
+}
+
+.approach-flow-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.approach-flow-card {
+  background: white;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border: 2px solid transparent;
+  transition: all 0.4s ease;
+}
+
+.approach-flow-card:hover {
+  border-color: #fb923c;
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(251, 146, 60, 0.2);
+}
+
+.approach-flow-number {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #fb923c, #fbbf24);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 900;
+  color: white;
+  box-shadow: 0 8px 20px rgba(251, 146, 60, 0.4);
+}
+
+.approach-flow-card::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #fb923c, #fbbf24);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(251, 146, 60, 0.6);
+}
+
+.left-side .approach-flow-card::before {
+  right: -62px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.right-side .approach-flow-card::before {
+  left: -62px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ========================================
+   ANIMATED VISION QUOTES
+   ======================================== */
+
+.vision-quote-container {
+  position: relative;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vision-quote-animated {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-style: italic;
+  color: #1e40af;
+  padding: 32px;
+  border-left: 6px solid #fb923c;
+  background: linear-gradient(135deg, #fef3c7 0%, #dbeafe 100%);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  opacity: 0;
+  transform: scale(0.95) translateY(20px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 900px;
+  text-align: center;
+}
+
+.vision-quote-animated.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  z-index: 1;
+}
+
+/* Coming Soon Product Card */
+.coming-soon-card {
+  position: relative;
+}
+
+.coming-soon-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(2px);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .flow-line {
+    left: 20px;
+  }
+  
+  .approach-flow-item.left-side,
+  .approach-flow-item.right-side {
+    padding-left: 60px;
+    padding-right: 0;
+    transform: translateX(-50px);
+  }
+  
+  .approach-flow-item.visible {
+    transform: translateX(0);
+  }
+  
+  .left-side .approach-flow-card::before,
+  .right-side .approach-flow-card::before {
+    left: -50px;
+    right: auto;
+  }
+  
+  .approach-flow-number {
+    right: auto;
+    left: -30px;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+  
+  .vision-quote-animated {
+    font-size: 1.4rem;
+    padding: 24px;
+  }
+  
+  .bio-grid {
+    grid-template-columns: 1fr;
+  }
+}
