@@ -4,6 +4,8 @@ import Home from "./pages/Home";
 import Careers from "./pages/Careers";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import ContactForm from "./pages/ContactForm";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
   return (
@@ -14,8 +16,10 @@ function App() {
           <Route path="/careers" element={<Careers />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/contact-form" element={<ContactForm />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </div>
   );
 }
