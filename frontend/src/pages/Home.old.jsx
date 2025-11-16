@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { ArrowRight, Sparkles, Target, Lightbulb, Shield, Cloud, Code, Database, Users, Mail, Phone, MapPin, Rocket, Award, Music, Cpu, ArrowUpRight } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import { BioluminescentGrid, BioluminescentGridItem } from '../components/ui/bioluminescent-grid';
+import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
+import { ArrowRight, Sparkles, Target, Lightbulb, Shield, Cloud, Code, Database, Users, Mail, Phone, MapPin, Rocket, Award, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [currentQuote, setCurrentQuote] = useState(0);
-  const navigate = useNavigate();
-
-  const visionQuotes = [
-    "We Are Immortals — Creating technology that transcends generations.",
-    "Innovation is not just what we do; it's who we are.",
-    "Building the future, one breakthrough at a time.",
-    "Excellence isn't an act, it's a habit we live by every day.",
-    "We don't follow trends — we create them."
-  ];
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,41 +33,16 @@ const Home = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Rotate quotes every 5 seconds
-  useEffect(() => {
-    const quoteInterval = setInterval(() => {
-      setCurrentQuote((prev) => (prev + 1) % visionQuotes.length);
-    }, 5000);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+    alert('Thank you for contacting us! We will get back to you soon.');
+    setFormData({ name: '', email: '', message: '' });
+  };
 
-    return () => clearInterval(quoteInterval);
-  }, []);
-
-  const services = [
-    {
-      Icon: Database,
-      title: "AI-Driven Data Analytics",
-      description: "Transform raw data into actionable insights with our advanced AI-powered analytics platform.",
-      className: "col-span-2 row-span-2",
-    },
-    {
-      Icon: Code,
-      title: "Custom Software Development",
-      description: "Bespoke software solutions engineered to meet your unique business requirements.",
-      className: "",
-    },
-    {
-      Icon: Cloud,
-      title: "Cloud Infrastructure Management",
-      description: "Scalable, secure, and optimized cloud solutions for modern enterprises.",
-      className: "",
-    },
-    {
-      Icon: Shield,
-      title: "Cybersecurity Solutions",
-      description: "Protect your digital assets with enterprise-grade security protocols and monitoring.",
-      className: "row-span-2",
-    },
-  ];
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -105,7 +76,7 @@ const Home = () => {
         </div>
       </header>
 
-      {/* Hero Section - Without Mouse Icon */}
+      {/* Hero Section */}
       <section className="hero-section relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
         <div className="floating-shape shape-1"></div>
         <div className="floating-shape shape-2"></div>
@@ -135,21 +106,24 @@ const Home = () => {
             </div>
           </div>
         </div>
+
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
+          </div>
+        </div>
       </section>
 
-      {/* About Us Section - Updated Description */}
+      {/* About Us Section */}
       <section id="about" className="section-padding bg-gradient-to-br from-blue-50 to-orange-50">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16 scroll-animate">
             <h2 className="section-title">About WRIM Technologies</h2>
             <div className="section-divider"></div>
             <p className="section-description">
-              Born from the vision of creating technology that outlasts trends and transforms industries, 
-              WRIM Technologies stands at the intersection of innovation and excellence. We are a team of 
-              passionate engineers, designers, and visionaries committed to building intelligent systems, 
-              scalable architectures, and breakthrough products that redefine what's possible. Our philosophy 
-              "We Are Immortals" reflects our dedication to crafting solutions that endure, evolve, and empower 
-              businesses to thrive in an ever-changing digital world.
+              WRIM Technologies is driven by the philosophy "We Are Immortals" — a commitment to creating 
+              technology that transcends time. We craft intelligent products, scalable services, and 
+              high-impact digital experiences that empower businesses to thrive in an ever-evolving digital landscape.
             </p>
           </div>
 
@@ -181,8 +155,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Services Section - Bioluminescent Grid */}
-      <section id="services" className="section-padding bio-section">
+      {/* Services Section */}
+      <section id="services" className="section-padding">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16 scroll-animate">
             <h2 className="section-title">Our Services</h2>
@@ -192,168 +166,154 @@ const Home = () => {
             </p>
           </div>
 
-          <BioluminescentGrid>
-            {services.map((service, i) => (
-              <BioluminescentGridItem key={i} className={service.className}>
-                <service.Icon className="w-10 h-10 mb-4 text-blue-400" />
-                <h2 className="text-xl font-bold mb-3 text-white">{service.title}</h2>
-                <p className="text-gray-300 leading-relaxed">{service.description}</p>
-              </BioluminescentGridItem>
-            ))}
-          </BioluminescentGrid>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Card className="service-card scroll-animate hover-lift group">
+              <CardHeader>
+                <div className="icon-wrapper mb-4">
+                  <Database className="w-8 h-8" />
+                </div>
+                <CardTitle className="text-xl mb-3">AI-Driven Data Analytics</CardTitle>
+                <CardDescription className="text-base leading-relaxed">
+                  Transform raw data into actionable insights with our advanced AI-powered analytics platform.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="service-card scroll-animate hover-lift group" style={{ animationDelay: '0.1s' }}>
+              <CardHeader>
+                <div className="icon-wrapper mb-4">
+                  <Code className="w-8 h-8" />
+                </div>
+                <CardTitle className="text-xl mb-3">Custom Software Development</CardTitle>
+                <CardDescription className="text-base leading-relaxed">
+                  Bespoke software solutions engineered to meet your unique business requirements.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="service-card scroll-animate hover-lift group" style={{ animationDelay: '0.2s' }}>
+              <CardHeader>
+                <div className="icon-wrapper mb-4">
+                  <Cloud className="w-8 h-8" />
+                </div>
+                <CardTitle className="text-xl mb-3">Cloud Infrastructure Management</CardTitle>
+                <CardDescription className="text-base leading-relaxed">
+                  Scalable, secure, and optimized cloud solutions for modern enterprises.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="service-card scroll-animate hover-lift group" style={{ animationDelay: '0.3s' }}>
+              <CardHeader>
+                <div className="icon-wrapper mb-4">
+                  <Shield className="w-8 h-8" />
+                </div>
+                <CardTitle className="text-xl mb-3">Cybersecurity Solutions</CardTitle>
+                <CardDescription className="text-base leading-relaxed">
+                  Protect your digital assets with enterprise-grade security solutions.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
         </div>
       </section>
 
-      {/* Products Section - Updated with museIt and Immortal OS */}
+      {/* Products Section */}
       <section id="products" className="section-padding bg-gradient-to-br from-orange-50 to-blue-50">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16 scroll-animate">
             <h2 className="section-title">Our Products</h2>
             <div className="section-divider"></div>
             <p className="section-description">
-              Innovative technology products designed to revolutionize the way you work and connect.
+              Innovative technology products designed to revolutionize the way you work.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {/* museIt */}
-            <Card className="product-card scroll-animate hover-lift">
-              <div className="product-image-placeholder">
-                <Music className="w-16 h-16 text-white" />
-              </div>
-              <CardHeader>
-                <CardTitle className="text-2xl mb-3">museIt</CardTitle>
-                <CardDescription className="text-base leading-relaxed mb-4">
-                  Connect through music. Listen to the same songs simultaneously with friends, 
-                  share your thoughts via chat, and send voice messages. Experience music together, anywhere.
-                </CardDescription>
-                <Button variant="outline" className="w-full hover-scale">
-                  Learn More <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </CardHeader>
-            </Card>
-
-            {/* Immortal OS */}
-            <Card className="product-card scroll-animate hover-lift" style={{ animationDelay: '0.1s' }}>
-              <div className="product-image-placeholder">
-                <Cpu className="w-16 h-16 text-white" />
-              </div>
-              <CardHeader>
-                <CardTitle className="text-2xl mb-3">Immortal OS</CardTitle>
-                <CardDescription className="text-base leading-relaxed mb-4">
-                  The operating system of the future. Built for performance, security, and longevity. 
-                  Experience computing reimagined from the ground up.
-                </CardDescription>
-                <Button variant="outline" className="w-full hover-scale">
-                  Learn More <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </CardHeader>
-            </Card>
-
-            {/* Coming Soon */}
-            <Card className="product-card scroll-animate hover-lift coming-soon-card" style={{ animationDelay: '0.2s' }}>
-              <div className="product-image-placeholder opacity-50">
-                <Sparkles className="w-16 h-16 text-white" />
-              </div>
-              <CardHeader>
-                <CardTitle className="text-2xl mb-3">More Coming Soon</CardTitle>
-                <CardDescription className="text-base leading-relaxed mb-4">
-                  We're constantly innovating and building new products. Stay tuned for exciting announcements!
-                </CardDescription>
-                <Button variant="outline" className="w-full" disabled>
-                  Coming Soon
-                </Button>
-              </CardHeader>
-            </Card>
+            {[1, 2, 3].map((item, index) => (
+              <Card key={item} className="product-card scroll-animate hover-lift" style={{ animationDelay: `${index * 0.1}s` }}>
+                <div className="product-image-placeholder">
+                  <Zap className="w-16 h-16 text-white" />
+                </div>
+                <CardHeader>
+                  <CardTitle className="text-2xl mb-3">Product {item}</CardTitle>
+                  <CardDescription className="text-base leading-relaxed mb-4">
+                    Revolutionary solution designed to enhance productivity and streamline operations.
+                  </CardDescription>
+                  <Button variant="outline" className="w-full hover-scale">
+                    Learn More <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </CardHeader>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Our Approach Section - Flow with Popup Animation */}
+      {/* Our Approach Section */}
       <section id="approach" className="section-padding">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16 scroll-animate">
             <h2 className="section-title">Our Approach</h2>
             <div className="section-divider"></div>
             <p className="section-description">
-              A systematic journey from vision to reality, powered by precision, creativity, and evolution.
+              Precision, creativity, and an evolving mindset drive our engineering excellence.
             </p>
           </div>
 
-          <div className="approach-flow">
-            {/* Flow Line */}
-            <div className="flow-line"></div>
-
-            {/* Step 1 */}
-            <div className="approach-flow-item scroll-animate left-side">
-              <div className="approach-flow-card">
-                <div className="approach-flow-number">01</div>
-                <Target className="w-10 h-10 text-orange-500 mb-4" />
-                <h3 className="text-2xl font-bold mb-4">Precision Engineering</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Every line of code, every design decision is crafted with meticulous attention to detail. 
-                  We build systems that are robust, efficient, and scalable.
-                </p>
+          <div className="grid md:grid-cols-3 gap-10">
+            <div className="approach-item scroll-animate text-center">
+              <div className="approach-icon-wrapper mb-6 mx-auto">
+                <Target className="w-10 h-10" />
               </div>
+              <h3 className="text-2xl font-bold mb-4">Precision Engineering</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Every line of code, every design decision is crafted with meticulous attention to detail.
+              </p>
             </div>
 
-            {/* Step 2 */}
-            <div className="approach-flow-item scroll-animate right-side" style={{ animationDelay: '0.2s' }}>
-              <div className="approach-flow-card">
-                <div className="approach-flow-number">02</div>
-                <Lightbulb className="w-10 h-10 text-yellow-500 mb-4" />
-                <h3 className="text-2xl font-bold mb-4">Creative Innovation</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  We think beyond conventional solutions to create transformative experiences. 
-                  Innovation is woven into our DNA.
-                </p>
+            <div className="approach-item scroll-animate text-center" style={{ animationDelay: '0.1s' }}>
+              <div className="approach-icon-wrapper mb-6 mx-auto">
+                <Lightbulb className="w-10 h-10" />
               </div>
+              <h3 className="text-2xl font-bold mb-4">Creative Innovation</h3>
+              <p className="text-gray-600 leading-relaxed">
+                We think beyond conventional solutions to create transformative experiences.
+              </p>
             </div>
 
-            {/* Step 3 */}
-            <div className="approach-flow-item scroll-animate left-side" style={{ animationDelay: '0.4s' }}>
-              <div className="approach-flow-card">
-                <div className="approach-flow-number">03</div>
-                <Sparkles className="w-10 h-10 text-blue-500 mb-4" />
-                <h3 className="text-2xl font-bold mb-4">Evolving Mindset</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Continuous learning and adaptation keep us at the forefront of technology. 
-                  We evolve with every challenge, every project, every breakthrough.
-                </p>
+            <div className="approach-item scroll-animate text-center" style={{ animationDelay: '0.2s' }}>
+              <div className="approach-icon-wrapper mb-6 mx-auto">
+                <Sparkles className="w-10 h-10" />
               </div>
+              <h3 className="text-2xl font-bold mb-4">Evolving Mindset</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Continuous learning and adaptation keep us at the forefront of technology.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Our Vision Section - Animated Quotes */}
+      {/* Our Vision Section */}
       <section id="vision" className="section-padding bg-gradient-to-br from-blue-50 to-yellow-50">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center scroll-animate">
             <h2 className="section-title mb-8">Our Vision</h2>
             <div className="section-divider mb-10"></div>
-            <p className="text-xl leading-relaxed text-gray-700 mb-12">
+            <p className="text-xl leading-relaxed text-gray-700 mb-8">
               At WRIM Technologies, we envision a future where technology empowers every individual and 
               organization to achieve the impossible. Our commitment to innovation, excellence, and building 
               solutions that stand the test of time drives everything we do.
             </p>
-            
-            {/* Animated Quote Container */}
-            <div className="vision-quote-container">
-              {visionQuotes.map((quote, index) => (
-                <blockquote
-                  key={index}
-                  className={`vision-quote-animated ${index === currentQuote ? 'active' : ''}`}
-                >
-                  "{quote}"
-                </blockquote>
-              ))}
-            </div>
+            <blockquote className="vision-quote">
+              "We Are Immortals — Creating technology that transcends generations."
+            </blockquote>
           </div>
         </div>
       </section>
 
-      {/* Contact Section - Updated with Advanced Form Button */}
+      {/* Contact Section */}
       <section id="contact" className="section-padding">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16 scroll-animate">
@@ -394,20 +354,47 @@ const Home = () => {
 
             <Card className="scroll-animate hover-lift">
               <CardHeader>
-                <CardTitle>Need More Options?</CardTitle>
-                <CardDescription className="text-base">
-                  Access our advanced contact forms for project inquiries, partnerships, and consultations.
-                </CardDescription>
+                <CardTitle>Send us a message</CardTitle>
               </CardHeader>
               <CardContent>
-                <Button 
-                  onClick={() => navigate('/contact-form')}
-                  className="w-full contact-submit"
-                  size="lg"
-                >
-                  Go to Advanced Contact Forms
-                  <ArrowUpRight className="ml-2 w-5 h-5" />
-                </Button>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <Input
+                      type="text"
+                      name="name"
+                      placeholder="Your Name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="contact-input"
+                    />
+                  </div>
+                  <div>
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder="Your Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="contact-input"
+                    />
+                  </div>
+                  <div>
+                    <Textarea
+                      name="message"
+                      placeholder="Your Message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      className="contact-input"
+                    />
+                  </div>
+                  <Button type="submit" className="w-full contact-submit">
+                    Send Message <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </form>
               </CardContent>
             </Card>
           </div>
